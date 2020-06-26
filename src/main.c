@@ -30,6 +30,8 @@ int main(int argc, char** argv) {
 		if((sekunden-lastheart)>10){
 			heartbeat();
 			lastheart = sekunden;
+			presentationpacket_t* pcmes = createmessage("TEST");
+			sendapplicationmessage(pcmes->buff, pcmes->size);
 		}
 		//Sleep(1000);
 	}
@@ -50,7 +52,6 @@ static void cbInputHandler(InputKeyMask_t m) {
 
 	}
 
-
 		bool up = (m & INPUT_KEY_MASK_KEY_UP);
 		bool down = (m & INPUT_KEY_MASK_KEY_DOWN);
 		bool left = (m & INPUT_KEY_MASK_KEY_LEFT);
@@ -59,36 +60,4 @@ static void cbInputHandler(InputKeyMask_t m) {
 		presentationpacket_t* pcontroll = createcontroll(up,right,down,left);
 		sendapplicationmessage(pcontroll->buff, pcontroll->size);
 		}
-
-
-	/*if (m == INPUT_KEY_MASK_KEY_RIGHT) {
-		uint8_t up = 0;
-		uint8_t down = 0;
-		uint8_t left = 0;
-		uint8_t right = 2;
-		presentationpacket_t* pcontroll = createcontroll(up,down,left,right);
-		sendapplicationmessage(pcontroll->buff, pcontroll->size);
-   	}
-
-	if (m == INPUT_KEY_MASK_KEY_DOWN) {
-		uint8_t up = 0;
-		uint8_t down = 3;
-		uint8_t left = 0;
-		uint8_t right = 0;
-		presentationpacket_t* pcontroll = createcontroll(up,down,left,right);
-		sendapplicationmessage(pcontroll->buff, pcontroll->size);
-
-   	}
-
-	if (m == INPUT_KEY_MASK_KEY_LEFT) {
-		uint8_t up = 0;
-		uint8_t down = 0;
-		uint8_t left = 4;
-		uint8_t right = 0;
-		presentationpacket_t* pcontroll = createcontroll(up,down,left,right);
-		sendapplicationmessage(pcontroll->buff, pcontroll->size);
-
-   	}
-*/
-
 }

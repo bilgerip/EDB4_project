@@ -52,6 +52,16 @@ presentationpacket_t* dropfood(){
 	return pdf;
 }
 
+presentationpacket_t* createmessage(char* message){
+	uint16_t namelenght = strlen(message);
+	uint32_t geslenght = GAME_HEADER_LENGHT - 1 + namelenght;
+	presentationpacket_t* pmes = creategamepacket(0, CHAT_MESSAGE, 0x5555, geslenght);
+	memcpy(&pmes->buff[7],message,geslenght);
+
+	return pmes;
+
+}
+
 presentationpacket_t* creategamepacket(uint16_t version, CommandID_e type, uint16_t transectionID, uint16_t packetlenght){
 	presentationpacket_t* ppacket = malloc(sizeof(presentationpacket_t));
 	if (ppacket == NULL){
@@ -83,6 +93,9 @@ presentationpacket_t* creategamepacket(uint16_t version, CommandID_e type, uint1
 	case REQUEST_PLAYER:
 		break;
 	case CHAT_MESSAGE:
+		write16Bufmsb(&ppacket->buff[1],ppacket->size-7);
+		write16Bufmsb(&ppacket->buff[3],CHAT_MESSAGE);
+		write16Bufmsb(&ppacket->buff[5], transectionID);
 		break;
 	}
 	return ppacket;
