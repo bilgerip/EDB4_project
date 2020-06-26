@@ -120,7 +120,7 @@ void sendapplicationmessage(uint8_t* buff, uint32_t lenght){
 	sendPacket_t* pam = createPacket(0,APPLICATION_SESSION,sessionID, sequenznbtx,lenght);
 	memcpy(&pam->pbuff[7],buff,lenght);
 	uint16_t hmac = generateHMAC(pam->pbuff, pam->size-2);
-	write16Bufmsb(&pam->pbuff[7], hmac);
+	write16Bufmsb(&pam->pbuff[pam->size-2], hmac);
 	network_send(pam->pbuff, pam->size);
 	free(pam->pbuff);
 	free(pam);
