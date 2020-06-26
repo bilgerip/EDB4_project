@@ -44,25 +44,51 @@ static void cbInputHandler(InputKeyMask_t m) {
 		gRunning = false;
    	}
 
-	if(m & INPUT_KEY_MASK_KEY_SPACE){
-		uint8_t test[3] = { 0, 1, 2 };
-		network_send(test, 3);
-		printf("Packet sent.\r\n");
+	if(m == INPUT_KEY_MASK_KEY_SPACE){
+		presentationpacket_t* pdrop = dropfood();
+		sendapplicationmessage(pdrop->buff, pdrop->size);
+
 	}
 
-	if (m == INPUT_KEY_MASK_KEY_UP) {
-		bool up = true;
+
+		bool up = (m & INPUT_KEY_MASK_KEY_UP);
+		bool down = (m & INPUT_KEY_MASK_KEY_DOWN);
+		bool left = (m & INPUT_KEY_MASK_KEY_LEFT);
+		bool right = (m & INPUT_KEY_MASK_KEY_RIGHT);
+		if (!(((up == true) && (down == true)) || ((left == true) && (right == true)))) {
+		presentationpacket_t* pcontroll = createcontroll(up,right,down,left);
+		sendapplicationmessage(pcontroll->buff, pcontroll->size);
+		}
+
+
+	/*if (m == INPUT_KEY_MASK_KEY_RIGHT) {
+		uint8_t up = 0;
+		uint8_t down = 0;
+		uint8_t left = 0;
+		uint8_t right = 2;
+		presentationpacket_t* pcontroll = createcontroll(up,down,left,right);
+		sendapplicationmessage(pcontroll->buff, pcontroll->size);
    	}
 
 	if (m == INPUT_KEY_MASK_KEY_DOWN) {
-		bool down = true;
+		uint8_t up = 0;
+		uint8_t down = 3;
+		uint8_t left = 0;
+		uint8_t right = 0;
+		presentationpacket_t* pcontroll = createcontroll(up,down,left,right);
+		sendapplicationmessage(pcontroll->buff, pcontroll->size);
+
    	}
 
 	if (m == INPUT_KEY_MASK_KEY_LEFT) {
-		bool left = true;
-   	}
+		uint8_t up = 0;
+		uint8_t down = 0;
+		uint8_t left = 4;
+		uint8_t right = 0;
+		presentationpacket_t* pcontroll = createcontroll(up,down,left,right);
+		sendapplicationmessage(pcontroll->buff, pcontroll->size);
 
-	if (m == INPUT_KEY_MASK_KEY_RIGHT) {
-		bool right = true;
    	}
+*/
+
 }

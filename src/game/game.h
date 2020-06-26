@@ -23,5 +23,6 @@ typedef enum{
 
 presentationpacket_t* createplayer(char* name, uint16_t transectionID);
 presentationpacket_t* creategamepacket(uint16_t version, CommandID_e type, uint16_t transectionID, uint16_t packetlenght);
-
+presentationpacket_t* createcontroll(bool up, bool down, bool left, bool right);
+presentationpacket_t* dropfood();
 #endif /* SRC_GAME_GAME_H_ */
