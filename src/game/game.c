@@ -13,7 +13,7 @@
 #include "../input/input_service.h"
 
 
-static GAME_HEADER_LENGHT = 8;
+static uint8_t GAME_HEADER_LENGHT = 8;
 
 presentationpacket_t* createplayer(char* name, uint16_t transectionID){
 	uint8_t namelenght = strlen(name);
@@ -91,6 +91,9 @@ presentationpacket_t* creategamepacket(uint16_t version, CommandID_e type, uint1
 		write16Bufmsb(&ppacket->buff[5], transectionID);
 		break;
 	case REQUEST_PLAYER:
+		write16Bufmsb(&ppacket->buff[1],ppacket->size-7);
+		write16Bufmsb(&ppacket->buff[3],REQUEST_PLAYER);
+		write16Bufmsb(&ppacket->buff[5], transectionID);
 		break;
 	case CHAT_MESSAGE:
 		write16Bufmsb(&ppacket->buff[1],ppacket->size-7);

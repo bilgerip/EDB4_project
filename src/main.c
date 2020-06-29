@@ -30,8 +30,8 @@ int main(int argc, char** argv) {
 		if((sekunden-lastheart)>10){
 			heartbeat();
 			lastheart = sekunden;
-			presentationpacket_t* pcmes = createmessage("TEST");
-			sendapplicationmessage(pcmes->buff, pcmes->size);
+			//presentationpacket_t* pcmes = createmessage("TEST");
+			//sendapplicationmessage(pcmes->buff, pcmes->size);
 		}
 		//Sleep(1000);
 	}
@@ -49,6 +49,13 @@ static void cbInputHandler(InputKeyMask_t m) {
 	if(m == INPUT_KEY_MASK_KEY_SPACE){
 		presentationpacket_t* pdrop = dropfood();
 		sendapplicationmessage(pdrop->buff, pdrop->size);
+
+	}
+	if(m == INPUT_KEY_MASK_KEY_INSERT){
+		char Chat[500];
+		gets(Chat);
+		presentationpacket_t* pchat = createmessage(Chat);
+		sendapplicationmessage(pchat->buff, pchat->size);
 
 	}
 
